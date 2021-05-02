@@ -3,13 +3,14 @@ from pygame.locals import *
 
 pygame.init()
 
-screen = pygame.display.set_mode((1080, 720))
-pygame.display.set_caption("trippy")
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+pygame.display.set_caption("bezier simulator")
 
 font = pygame.font.SysFont(None, 20)
-img = font.render('click to start a line, click again to end it.', True, (0,0,0))
+img = font.render('click to start a line, click again to end it and start a new line.', True, (0,0,0))
 img2 = font.render('press any key to start bezier animation.', True, (0,0,0))
 img3 = font.render('press any key again after animation to make another bezier', True, (0,0,0))
+img4 = font.render('try drawing many lines', True, (0,0,0))
 
 running = True
 
@@ -19,7 +20,7 @@ finishedBezier = False
 linePoints = []
 
 bezierPos = 0
-increase = 0.001
+increase = 0.002 
 
 bezierPoints = []
 curveDots = []
@@ -51,6 +52,7 @@ while running:
     screen.blit(img, (10, 10))
     screen.blit(img2, (10, 30))
     screen.blit(img3, (10, 50))
+    screen.blit(img4, (10, 70))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -101,6 +103,7 @@ while running:
         else:
             finishedBezier = True;
         for i in range(len(curveDots)):
-            pygame.draw.circle(screen, (0,0,0), curveDots[i], 1)
+            pygame.draw.circle(screen, (255,0,0), curveDots[i], 2)
+            #pygame.draw.line(screen, (255,0,0), curveDots[i], curveDots[i+1], 2)
 
     pygame.display.update()
