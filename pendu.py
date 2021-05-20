@@ -1,20 +1,19 @@
 import pygame
 import math
 from pygame.locals import *
-
-#CHANGE ROD_LENGTHS, ROD_VELS, AND ROD_ANGLES TO CHANGE INITIAL PENDULUM STATE
+from random import randint, uniform
 
 pygame.init()
 screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
 pygame.display.set_caption("1000 pendulums lmao")
 
-rod_lengths = [100, 50, 75, 20, 100]
-rod_vels = [0,0,0,0,0]
-rod_angles = [1, 2, 0, 1, 0.5]
+rod_lengths = []
+rod_vels = []
+rod_angles = []
 
 rod_points = [[720, 360]]
 
-gravity = -0.01
+gravity = -0.02
 
 running = True
 
@@ -24,7 +23,17 @@ pendulumAnim = True
 
 drawPoints = []
 
+framesSinceStart = 0
+
 while running:
+
+    if framesSinceStart >= 5000 or len(rod_lengths) == 0:
+        newLen = randint(3, 10)
+        rod_lengths = [randint(300//newLen, 900//newLen) for i in range(newLen)]
+        rod_angles = [uniform(-math.pi/2-0.1, 3*math.pi/2+0.1) for i in range(newLen)]
+        rod_vels = [0 for i in range(newLen)]
+        framesSinceStart = 0
+
     screen.fill((255,255,255))
     rod_pos_cur = [720, 360]
 
@@ -58,3 +67,5 @@ while running:
 
 
     pygame.display.update()
+
+    framesSinceStart += 1
